@@ -1,9 +1,9 @@
-import Search from "@/app/user/page";
+import BlogItems from "@/Component/Blogitem";
 
 export default function Home() {
   return (
     <>
-      <Search />
+      <BlogItems />
     </>
   );
 }
