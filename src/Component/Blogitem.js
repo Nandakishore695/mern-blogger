@@ -9,78 +9,78 @@ const BlogItems = () => {
 
   return (
     <>
-      <main className="px-4 text-center">
-        <h1 className="font-medium text-4xl ">Latest Blogs</h1>
-        <p className="mt-8">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.
+      <main className="px-4 text-center my-8">
+        <h1 className="font-medium text-6xl ">Latest Blogs</h1>
+        <p className="text-clip my-8">
+        A powerful app for professional publishers to create, share, and grow a business around their content.
         </p>
-        <form className="flex justify-center ">
+        <form className="flex justify-center gap-4">
           <input
             type="text"
             placeholder="Enter your email..."
-            className="border-solid border-2 p-4 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)]"
+            className="border-solid border-2 p-4 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] rounded focus:outline-0"
           />
-          <button className="border-solid border-2 p-4 shadow-[-2px_8px_0px_0px_rgba(0,0,0,1)]">Subscribe</button>
+          <button className="border-solid border-2 p-4 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] rounded">Subscribe</button>
         </form>
       </main>
 
       <section className="flex justify-center mt-8">  
-        <p className="px-4 mx-2 bg-black text-white cursor-pointer">All</p>
-        <p className="px-4 mx-2cursor-pointer">React JS</p>
-        <p className="px-4 mx-2cursor-pointer">Next JS</p>
-        <p className="px-4 mx-2cursor-pointer">Express Js</p>
-        <p className="px-4 mx-2 cursor-pointer">Git</p>
+        <p className="p-4 mx-2 bg-black text-white cursor-pointer rounded-2xl ">All</p>
+        <p className="p-4 mx-2 cursor-pointer">React JS</p>
+        <p className="p-4 mx-2 cursor-pointer">Next JS</p>
+        <p className="p-4 mx-2 cursor-pointer">Express Js</p>
+        <p className="p-4 mx-2 cursor-pointer">Git</p>
       </section>
-      <section className="flex p-5 ">
-        <div className="border-solid border-2 m-1 h-auto">
+      <section className="xl:flex p-5 ">
+        <div className="border-solid border-2 m-2 h-auto hover:shadow-[-8px_8px_5px_0px_rgba(0,0,0,1)] rounded">
           <Image src={blog_data[0].image} width={500} alt={blog_data[0].image}/>
           <div className="p-4">
-            <p className="bg-black w-24 text-white p-2 my-2">{blog_data[0].category}</p>
-            <h2 className="my-2">{blog_data[0].title}</h2>
-            <p className="my-2">
+            <p className="bg-black w-30 text-white p-2 my-2 flex items-center justify-center rounded-2xl">{!blog_data[0].category} React JS</p>
+            <h2 className="my-2 py-2">{blog_data[0].title}</h2>
+            <p className="my-2 py-2">
             {blog_data[0].description}
             </p>
-            <p className="flex gap-2">
-            <Link href="/blog">Read more </Link> 
+            <p className="flex gap-2 border-2 w-30 p-1 rounded">
+            <Link href="/blog" >Read more </Link> 
             <Image src={arrow} alt="arrow"/>
           </p>
           </div>
         </div>
-        <div className="border-solid border-2 m-1 h-auto">
+        <div className="border-solid border-2 m-2 h-auto hover:shadow-[-8px_8px_5px_0px_rgba(0,0,0,1)] rounded">
         <Image src={blog_data[1].image} width={500} alt={blog_data[1].image}/>
         <div className="p-4">
-            <p className="bg-black w-24 text-white p-2 my-2">{blog_data[1].category}</p>
-            <h2 className="my-2">{blog_data[1].title}</h2>
-            <p className="my-2">
+            <p className="bg-black w-24 text-white p-2 my-2 flex items-center justify-center rounded-2xl">{!blog_data[1].category} Next JS</p>
+            <h2 className="my-2 py-2">{blog_data[1].title}</h2>
+            <p className="my-2 py-2">
             {blog_data[1].description}
             </p>
-            <p className="flex gap-2">
+            <p className="flex gap-2 border-2 w-30 p-1 rounded">
             <Link href="/blog">Read more </Link><Image src={arrow} alt="arrow"/>
           </p>
           </div>
         </div>
-        <div className="border-solid border-2 m-1 h-auto">
+        <div className="border-solid border-2 m-2 h-auto hover:shadow-[-8px_8px_5px_0px_rgba(0,0,0,1)] rounded">
         <Image src={blog_data[2].image} width={500} alt={blog_data[2].image}/>
           <div className="p-4">
-            <p className="bg-black w-24 text-white p-2 my-2">{blog_data[2].category}</p>
-            <h2 className="my-2">{blog_data[2].title}</h2>
-            <p className="my-2">
+            <p className="bg-black w-24 text-white p-2 my-2 flex items-center justify-center rounded-2xl">{!blog_data[2].category} Express JS</p>
+            <h2 className="my-2 py-2">{blog_data[2].title}</h2>
+            <p className="my-2 py-2">
             {blog_data[2].description}
             </p>
-            <p className="flex gap-2">
+            <p className="flex gap-2 border-2 w-30 p-1 rounded">
             <Link href="/blog">Read more </Link><Image src={arrow} alt="arrow"/>
           </p>
           </div>
         </div>
-        <div className="border-solid border-2 m-1 h-auto">
+        <div className="border-solid border-2 m-2 h-auto hover:shadow-[-8px_8px_5px_0px_rgba(0,0,0,1)] rounded">
         <Image src={blog_data[3].image} width={500} alt={blog_data[3].image}/>
           <div className="p-4">
-            <p className="bg-black w-24 text-white p-2  my-2">{blog_data[3].category}</p>
-            <h2 className="my-2">{blog_data[3].title}</h2>
-            <p className="my-2">
+            <p className="bg-black w-24 text-white p-2 my-2 flex items-center justify-center rounded-2xl">{!blog_data[3].category}Git</p>
+            <h2 className="my-2 py-2">{blog_data[3].title}</h2>
+            <p className="my-2 py-2">
             {blog_data[3].description}
             </p>
-            <p className="flex gap-2">
+            <p className="flex gap-2 border-2 w-30 p-1 rounded">
             <Link href="/blog">Read more </Link><Image src={arrow} alt="arrow"/>
           </p>
           </div>
