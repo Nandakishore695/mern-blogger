@@ -4,7 +4,6 @@ import { assets } from "../../../../assets/assets";
 
 export default function Bloglists() {
   const { profile_icon } = assets;
-  console.log(assets);
   
   return (
     <div className="p-5">
