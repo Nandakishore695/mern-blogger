@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
-
+import toast, { Toaster } from 'react-hot-toast';
 import { assets, blog_data } from "../../assets/assets";
 import Link from "next/link";
 import axios from "axios";
@@ -9,31 +9,51 @@ import axios from "axios";
 const BlogItems = () => {
   const { arrow } = assets;
   const [emailId, setEmailId] = useState({"isEmailId":""});
-  const [isError, setError] = useState();
-  const url = "http://localhost:3000"
+   const [apiResponse, setApiResponse] = useState([]);
+   const [filterResponse, setFilterResponse] = useState([]);
+   const [types, setTypes] = useState("all");
+  const url = "http://localhost:3000";
+
+    useEffect(()=>{
+      getBlogLits();
+    },[]);
+    
   const handleEmailSubscribe = (event) => {
     const {name, value } = event.target;
     setEmailId({...emailId, [name]: value});
   };
+
   const handleSubmitEmailSubscribe = async (event) => {
     event.preventDefault();
     try {
-     await axios.post(`${url}/api/email` , emailId,
-        {
-    headers: {
-      'Content-Type': 'application/json', //  Important:  Tell the server what type of data you're sending
-      
-    },}
-      )
-      
+     await axios.post(`${url}/api/email` , emailId,{headers: {'Content-Type': 'application/json'},});
+      setEmailId({isEmailId:""})
+      toast.success("You Have Email Subscribe");
     } catch (error) {
-      setError(error.message)
+      toast.error(error.message);
     }
-    
   };
+  
+    const getBlogLits = async() =>{
+        try {
+          const response = await axios.get(`${url}/api/blogs`)
+          setApiResponse(response.data.response);
+          setFilterResponse(response.data.response)
+        } catch (error) {
+          toast.error(error.message);
+        }
+    }
+
+    const handleMenu = (type) => {
+      setTypes(type)
+      const result = apiResponse.filter((item) => item.blogCategory.toLowerCase() === type)
+      type === "all" ? setFilterResponse(apiResponse):setFilterResponse(result)      
+    }
+
   return (
     <>
       <main className="px-4 text-center my-8">
+      <Toaster position="top-center" reverseOrder={false} />
         <h1 className="font-medium text-6xl ">Latest Blogs</h1>
         <p className="text-clip my-8">
           A powerful app for professional publishers to create, share, and grow
@@ -50,6 +70,7 @@ const BlogItems = () => {
             className="border-solid border-2 p-4 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl focus:outline-0"
             name="isEmailId"
             onChange={handleEmailSubscribe}
+            value={emailId.isEmailId}
           />
           <button
             className="border-solid border-2 p-4 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl"
@@ -61,90 +82,39 @@ const BlogItems = () => {
       </main>
 
       <section className="flex justify-center mt-8">
-        <p className="p-4 mx-2 bg-black text-white cursor-pointer rounded-2xl ">
-          All
-        </p>
-        <p className="p-4 mx-2 cursor-pointer">React JS</p>
-        <p className="p-4 mx-2 cursor-pointer">Next JS</p>
-        <p className="p-4 mx-2 cursor-pointer">Express Js</p>
-        <p className="p-4 mx-2 cursor-pointer">Git</p>
+        <button className={`p-4 mx-2  ${types === "all"? 'bg-black text-white' : 'bg-white text-black'}   cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("all")}>All</button>
+        <button className={`p-4 mx-2  ${types === "reactjs"? 'bg-black text-white' : 'bg-white text-black'}  cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("reactjs")}>React JS</button>
+        <button className={`p-4 mx-2  ${types === "nextjs"? 'bg-black text-white' : 'bg-white text-black'}  cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("nextjs")}>Next JS</button>
+        <button className={`p-4 mx-2  ${types === "expressjs"? 'bg-black text-white' : 'bg-white text-black'}  cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("expressjs")}>Express Js</button>
+        <button className={`p-4 mx-2  ${types === "git"? 'bg-black text-white' : 'bg-white text-black'}  cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("git")}>Git</button>
       </section>
       <section className="xl:flex p-5 ">
-        <div className="border-solid border-2 m-2 h-auto hover:shadow-[-8px_8px_5px_0px_rgba(0,0,0,1)] rounded">
-          <Image
+        {filterResponse.map((item, index) => {
+          return (
+            <>
+              <div className="grid grid-cols-3 gap-4 border-solid border-2 m-2 h-auto hover:shadow-[-8px_8px_5px_0px_rgba(0,0,0,1)] rounded" key={index}>
+          {/* <Image
             src={blog_data[0].image}
             width={500}
             alt={blog_data[0].image}
-          />
+          /> */}
           <div className="p-4">
             <p className="bg-black w-30 text-white p-2 my-2 flex items-center justify-center rounded-2xl">
-              {!blog_data[0].category} React JS
+              {item.blogCategory} 
             </p>
-            <h2 className="my-2 py-2">{blog_data[0].title}</h2>
-            <p className="my-2 py-2">{blog_data[0].description}</p>
+            <h2 className="my-2 py-2 font-bold">{item.blogTitle}</h2>
+            <p className="my-2 py-2">{item.blogDescription}</p>
             <p className="flex gap-2 border-2 w-34 p-2 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl">
               <Link href="/blog">Read more </Link>
               <Image src={arrow} alt="arrow" />
             </p>
           </div>
         </div>
-        <div className="border-solid border-2 m-2 h-auto hover:shadow-[-8px_8px_5px_0px_rgba(0,0,0,1)] rounded">
-          <Image
-            src={blog_data[1].image}
-            width={500}
-            alt={blog_data[1].image}
-          />
-          <div className="p-4">
-            <p className="bg-black w-24 text-white p-2 my-2 flex items-center justify-center rounded-2xl">
-              {!blog_data[1].category} Next JS
-            </p>
-            <h2 className="my-2 py-2">{blog_data[1].title}</h2>
-            <p className="my-2 py-2">{blog_data[1].description}</p>
-            <p className="flex gap-2 border-2 w-34 p-2 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl">
-              <Link href="/blog">Read more </Link>
-              <Image src={arrow} alt="arrow" />
-            </p>
-          </div>
-        </div>
-        <div className="border-solid border-2 m-2 h-auto hover:shadow-[-8px_8px_5px_0px_rgba(0,0,0,1)] rounded">
-          <Image
-            src={blog_data[2].image}
-            width={500}
-            alt={blog_data[2].image}
-          />
-          <div className="p-4">
-            <p className="bg-black w-24 text-white p-2 my-2 flex items-center justify-center rounded-2xl">
-              {!blog_data[2].category} Express JS
-            </p>
-            <h2 className="my-2 py-2">{blog_data[2].title}</h2>
-            <p className="my-2 py-2">{blog_data[2].description}</p>
-            <p className="flex gap-2 border-2 w-34 p-2 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl">
-              <Link href="/blog">Read more </Link>
-              <Image src={arrow} alt="arrow" />
-            </p>
-          </div>
-        </div>
-        <div className="border-solid border-2 m-2 h-auto hover:shadow-[-8px_8px_5px_0px_rgba(0,0,0,1)] rounded">
-          <Image
-            src={blog_data[3].image}
-            width={500}
-            alt={blog_data[3].image}
-          />
-          <div className="p-4">
-            <p className="bg-black w-24 text-white p-2 my-2 flex items-center justify-center rounded-2xl">
-              {!blog_data[3].category}Git
-            </p>
-            <h2 className="my-2 py-2">{blog_data[3].title}</h2>
-            <p className="my-2 py-2">{blog_data[3].description}</p>
-            <p className="flex gap-2 border-2 w-34 p-2 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl">
-              <Link href="/blog">Read more </Link>
-              <Image src={arrow} alt="arrow" />
-            </p>
-          </div>
-        </div>
+            </>
+          )
+        })}
       </section>
     </>
   );
 };
-
 export default BlogItems;

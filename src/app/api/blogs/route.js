@@ -6,16 +6,19 @@ export async function POST(request) {
     await connectDb();
     const { blogImage, blogTitle, blogDescription, blogCategory } = await request.json();
     const blog = await NewBlog.create({blogImage,blogTitle,blogDescription,blogCategory,});
-    
-    return NextResponse.json(
-      {message: "Blog created successfully",blog},
-      { status: 201 }
-    );
+    return NextResponse.json({message: "Blog created successfully",success: true, blog});
   } catch (error) {
-    console.log("Blog creation error:", error.message);
     return NextResponse.json(
-      {message: "Error creating blog",error: error.message},
-      { status: 500 }
-    );
+      {message: "Error creating blog",error: error.message, success: false  });
+  }
+}
+
+export async function GET() {
+  try {
+    await connectDb();
+     const response = await NewBlog.find();
+     return NextResponse.json({message: "Blog created successfully",success: true, response});
+  } catch (error) {
+    return NextResponse.json({message: error.message, success: false})
   }
 }
