@@ -36,7 +36,7 @@ export default function Subscriptions() {
 
   return (
     <div className="p-5">
-              <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <h1 className="capitalize">All Subscription</h1>
       <div className="border-1 my-2 p-2">
         <div className="grid grid-cols-3 gap-4">

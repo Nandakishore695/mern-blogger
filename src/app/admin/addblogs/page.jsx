@@ -13,8 +13,11 @@ export default function AddBlogs() {
 
     const handleInput = (event) => {
         const { name, value, files } = event.target;
+        debugger
         if(files){
         setData({...data,[name]: files[0]});
+        console.log(data.blogImage);
+        
         }
         setData({...data,[name]: value});
     }
@@ -33,7 +36,7 @@ export default function AddBlogs() {
         <Toaster position="top-center" reverseOrder={false} />
       <form action="post" onSubmit={handleSubmit} className="p-5"  >
         <label htmlFor="uploadThumbnail" className="cursor-pointer">Upload Thumbnail
-        <Image src={!data.thumbnail ? upload_area: data.thumbnail} alt="thumbnail"  for="uploadThumbnail" /></label>
+        <Image   src={!data.blogImage ? assets.upload_area : URL.createObjectURL(data.blogImage)} alt="thumbnail"  for="uploadThumbnail"  /></label>
         <br />
         <input type="file" name="blogImage" id="uploadThumbnail" hidden onChange={handleInput} />
         <br />

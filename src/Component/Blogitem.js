@@ -2,21 +2,21 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import toast, { Toaster } from 'react-hot-toast';
-import { assets, blog_data } from "../../assets/assets";
 import Link from "next/link";
 import axios from "axios";
+import { assets } from "../../assets/assets";
 
 const BlogItems = () => {
   const { arrow } = assets;
   const [emailId, setEmailId] = useState({"isEmailId":""});
-   const [apiResponse, setApiResponse] = useState([]);
-   const [filterResponse, setFilterResponse] = useState([]);
-   const [types, setTypes] = useState("all");
+  const [apiResponse, setApiResponse] = useState([]);
+  const [filterResponse, setFilterResponse] = useState([]);
+  const [types, setTypes] = useState("all");
   const url = "http://localhost:3000";
 
-    useEffect(()=>{
-      getBlogLits();
-    },[]);
+  useEffect(()=>{
+    getBlogLits();
+  },[]);
     
   const handleEmailSubscribe = (event) => {
     const {name, value } = event.target;
@@ -26,29 +26,34 @@ const BlogItems = () => {
   const handleSubmitEmailSubscribe = async (event) => {
     event.preventDefault();
     try {
-     await axios.post(`${url}/api/email` , emailId,{headers: {'Content-Type': 'application/json'},});
-      setEmailId({isEmailId:""})
-      toast.success("You Have Email Subscribe");
+      if(!emailId.isEmailId){
+      toast.error("Empty value pls provide");
+      }
+      else{     
+        await axios.post(`${url}/api/email` , emailId,{headers: {'Content-Type': 'application/json'},});
+        setEmailId({isEmailId:""});
+        toast.success("You Have Email Subscribe");
+      }
     } catch (error) {
       toast.error(error.message);
     }
   };
   
-    const getBlogLits = async() =>{
-        try {
-          const response = await axios.get(`${url}/api/blogs`)
-          setApiResponse(response.data.response);
-          setFilterResponse(response.data.response)
-        } catch (error) {
-          toast.error(error.message);
-        }
-    }
+  const getBlogLits = async() =>{
+      try {
+        const response = await axios.get(`${url}/api/blogs`);
+        setApiResponse(response.data.response);
+        setFilterResponse(response.data.response);
+      } catch (error) {
+        toast.error(error.message);
+      }
+  }
 
-    const handleMenu = (type) => {
-      setTypes(type)
-      const result = apiResponse.filter((item) => item.blogCategory.toLowerCase() === type)
-      type === "all" ? setFilterResponse(apiResponse):setFilterResponse(result)      
-    }
+  const handleMenu = (type) => {
+    setTypes(type)
+    const result = apiResponse.filter((item) => item.blogCategory.toLowerCase() === type);
+    type === "all" ? setFilterResponse(apiResponse):setFilterResponse(result);  
+  }
 
   return (
     <>
@@ -73,7 +78,7 @@ const BlogItems = () => {
             value={emailId.isEmailId}
           />
           <button
-            className="border-solid border-2 p-4 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl"
+            className="border-solid border-2 p-4 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl cursor-pointer"
             type="submit"
           >
             Subscribe
@@ -82,11 +87,11 @@ const BlogItems = () => {
       </main>
 
       <section className="flex justify-center mt-8">
-        <button className={`p-4 mx-2  ${types === "all"? 'bg-black text-white' : 'bg-white text-black'}   cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("all")}>All</button>
-        <button className={`p-4 mx-2  ${types === "reactjs"? 'bg-black text-white' : 'bg-white text-black'}  cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("reactjs")}>React JS</button>
-        <button className={`p-4 mx-2  ${types === "nextjs"? 'bg-black text-white' : 'bg-white text-black'}  cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("nextjs")}>Next JS</button>
-        <button className={`p-4 mx-2  ${types === "expressjs"? 'bg-black text-white' : 'bg-white text-black'}  cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("expressjs")}>Express Js</button>
-        <button className={`p-4 mx-2  ${types === "git"? 'bg-black text-white' : 'bg-white text-black'}  cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("git")}>Git</button>
+        <button className={`p-4 mx-2  ${types === "all"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("all")}>All</button>
+        <button className={`p-4 mx-2  ${types === "reactjs"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("reactjs")}>React JS</button>
+        <button className={`p-4 mx-2  ${types === "nextjs"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("nextjs")}>Next JS</button>
+        <button className={`p-4 mx-2  ${types === "expressjs"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("expressjs")}>Express Js</button>
+        <button className={`p-4 mx-2  ${types === "git"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("git")}>Git</button>
       </section>
       <section className="xl:flex p-5 ">
         {filterResponse.map((item, index) => {
@@ -105,8 +110,8 @@ const BlogItems = () => {
             <h2 className="my-2 py-2 font-bold">{item.blogTitle}</h2>
             <p className="my-2 py-2">{item.blogDescription}</p>
             <p className="flex gap-2 border-2 w-34 p-2 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl">
-              <Link href="/blog">Read more </Link>
-              <Image src={arrow} alt="arrow" />
+              <Link href={`/blogs/${item._id}`} >Read more </Link>
+              {/* <Image src={arrow} alt="arrow" /> */}
             </p>
           </div>
         </div>

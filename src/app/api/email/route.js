@@ -21,7 +21,6 @@ export async function GET() {
     } catch (error) {
         return NextResponse.json({"message":error.message, success: false})
     }
-    
 }
 
 export async function DELETE(request) {
@@ -30,9 +29,7 @@ export async function DELETE(request) {
         const emailId= request.nextUrl.searchParams.get("idd");
         const response = await UserEmail.findByIdAndDelete(emailId);
         return NextResponse.json({message: "Email Removed", success: true, response});
-
     } catch (error) {
         return NextResponse.json({"message": error.message, success: false});
     }
-    
 }
