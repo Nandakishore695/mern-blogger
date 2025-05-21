@@ -57,7 +57,7 @@ const BlogItems = () => {
 
   return (
     <>
-      <main className="px-4 text-center my-8">
+      <main className="px-5 text-center my-8">
       <Toaster position="top-center" reverseOrder={false} />
         <h1 className="font-medium text-6xl ">Latest Blogs</h1>
         <p className="text-clip my-8">
@@ -87,28 +87,28 @@ const BlogItems = () => {
       </main>
 
       <section className="flex justify-center mt-8">
-        <button className={`p-4 mx-2  ${types === "all"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("all")}>All</button>
-        <button className={`p-4 mx-2  ${types === "reactjs"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("reactjs")}>React JS</button>
-        <button className={`p-4 mx-2  ${types === "nextjs"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("nextjs")}>Next JS</button>
-        <button className={`p-4 mx-2  ${types === "expressjs"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("expressjs")}>Express Js</button>
-        <button className={`p-4 mx-2  ${types === "git"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("git")}>Git</button>
+        <button className={`p-2 lg:p-4 mx-2  ${types === "all"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("all")}>All</button>
+        <button className={`p-2 lg:p-4 mx-2  ${types === "reactjs"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("reactjs")}>React JS</button>
+        <button className={`p-2 lg:p-4 mx-2  ${types === "nextjs"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("nextjs")}>Next JS</button>
+        <button className={`p-2 lg:p-4 mx-2  ${types === "expressjs"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("expressjs")}>Express Js</button>
+        <button className={`p-2 lg:p-4 mx-2  ${types === "git"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("git")}>Git</button>
       </section>
-      <section className="xl:flex p-5 ">
+      <section className="lg:flex p-5 ">
         {filterResponse.map((item, index) => {
           return (
             <>
-              <div className="grid grid-cols-3 gap-4 border-solid border-2 m-2 h-auto hover:shadow-[-8px_8px_5px_0px_rgba(0,0,0,1)] rounded" key={index}>
+              <div className="grid lg:grid-cols-3 gap-4 border-solid border-2 m-2 h-auto hover:shadow-[-8px_8px_5px_0px_rgba(0,0,0,1)] rounded" key={index}>
           {/* <Image
             src={blog_data[0].image}
             width={500}
             alt={blog_data[0].image}
           /> */}
           <div className="p-4">
-            <p className="bg-black w-30 text-white p-2 my-2 flex items-center justify-center rounded-2xl">
+            <p className="underline underline-offset-8 text-2xl lg:text-lg lg:bg-black lg:w-30 lg:text-white p-2 my-2 flex items-center justify-center rounded-2xl capitalize">
               {item.blogCategory} 
             </p>
-            <h2 className="my-2 py-2 font-bold">{item.blogTitle}</h2>
-            <p className="my-2 py-2">{item.blogDescription}</p>
+            <h2 className="my-2 py-2  text-2xl lg:text-4xl font-bold">{item.blogTitle}</h2>
+            <p className="my-2 py-2 text-justify">{item.blogDescription}</p>
             <p className="flex gap-2 border-2 w-34 p-2 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl">
               <Link href={`/blogs/${item._id}`} >Read more </Link>
               {/* <Image src={arrow} alt="arrow" /> */}
