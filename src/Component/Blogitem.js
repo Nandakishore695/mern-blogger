@@ -76,13 +76,9 @@ const BlogItems = () => {
             name="isEmailId"
             onChange={handleEmailSubscribe}
             value={emailId.isEmailId}
+            autoComplete="off"
           />
-          <button
-            className="border-solid border-2 p-4 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl cursor-pointer"
-            type="submit"
-          >
-            Subscribe
-          </button>
+          <button className="border-solid border-2 p-4 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl cursor-pointer"type="submit">Subscribe</button>
         </form>
       </main>
 
@@ -93,31 +89,23 @@ const BlogItems = () => {
         <button className={`p-2 lg:p-4 mx-2  ${types === "expressjs"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("expressjs")}>Express Js</button>
         <button className={`p-2 lg:p-4 mx-2  ${types === "git"? 'bg-black text-white' : 'bg-white text-black'} cursor-pointer rounded-2xl hover:border`} onClick={()=>handleMenu("git")}>Git</button>
       </section>
-      <section className="lg:flex p-5 ">
+      <section className="grid lg:grid-cols-3 gap-4 p-5">
         {filterResponse.map((item, index) => {
           return (
-            <>
-              <div className="grid lg:grid-cols-3 gap-4 border-solid border-2 m-2 h-auto hover:shadow-[-8px_8px_5px_0px_rgba(0,0,0,1)] rounded" key={index}>
-          {/* <Image
-            src={blog_data[0].image}
-            width={500}
-            alt={blog_data[0].image}
-          /> */}
-          <div className="p-4">
-            <p className="underline underline-offset-8 text-2xl lg:text-lg lg:bg-black lg:w-30 lg:text-white p-2 my-2 flex items-center justify-center rounded-2xl capitalize">
+          <div className="border-solid border-2 m-2 h-auto hover:shadow-[-8px_8px_5px_0px_rgba(0,0,0,1)] rounded" key={index}>
+            <div className="p-4">
+               <p className="underline underline-offset-8 text-2xl lg:text-lg lg:bg-black lg:w-30 lg:text-white p-2 my-2 flex items-center justify-center rounded-2xl capitalize">
               {item.blogCategory} 
             </p>
             <h2 className="my-2 py-2  text-2xl lg:text-4xl font-bold">{item.blogTitle}</h2>
             <p className="my-2 py-2 text-justify">{item.blogDescription}</p>
-            <p className="flex gap-2 border-2 w-34 p-2 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl">
+              <p className="flex gap-2 border-2 w-34 p-2 shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl">
               <Link href={`/blogs/${item._id}`} >Read more </Link>
               {/* <Image src={arrow} alt="arrow" /> */}
             </p>
+            </div>
           </div>
-        </div>
-            </>
-          )
-        })}
+          )})}
       </section>
     </>
   );

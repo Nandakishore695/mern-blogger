@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <div className='bg-black p-5'>
         <ul className='lg:flex justify-around items-center'>
-            <li><Link href="/"><Image src={logo_light} alt="logs"/></Link></li>
+            <li><Link href="/"><Image src={logo_light} alt="logs" width={201} height={55}/></Link></li>
             <li className='text-white my-4'>All right reserved. Copyright @blogger </li>
             <li>
                 <ul className="flex text-start lg:my-4">

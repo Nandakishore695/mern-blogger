@@ -47,15 +47,12 @@ export default function Bloglists() {
         </div>
         {apiResponse.map((item, index)=> {
           return (
-            <>
-             <div className="grid grid-cols-4 lg:gap-4 my-4" key={index}>
+            <div className="grid grid-cols-4 lg:gap-4 my-4 border-b-1 lg:py-4" key={index}>
           <div className="capitalize p-2">{item.blogCategory}</div>
           <div className="capitalize p-2">{item.blogTitle}</div>
           <div className="capitalize p-2">{item.createDate}</div>
           <div className=""><button className="shadow-[-8px_8px_0px_0px_rgba(0,0,0,1)] border-black-600 border-2 px-4 py-2 rounded-2xl" onClick={()=>handleRemoveBlogList(item._id)}>Remove</button></div>
-        </div>
-        <hr />
-            </>
+            </div>
           )
         })}
       </div>

@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { assets } from "../../../../assets/assets";
 import toast, { Toaster } from 'react-hot-toast';
@@ -16,8 +16,6 @@ export default function AddBlogs() {
         debugger
         if(files){
         setData({...data,[name]: files[0]});
-        console.log(data.blogImage);
-        
         }
         setData({...data,[name]: value});
     }
@@ -36,7 +34,8 @@ export default function AddBlogs() {
         <Toaster position="top-center" reverseOrder={false} />
       <form action="post" onSubmit={handleSubmit} className="p-5"  >
         <label htmlFor="uploadThumbnail" className="cursor-pointer">Upload Thumbnail
-        <Image   src={!data.blogImage ? assets.upload_area : URL.createObjectURL(data.blogImage)} alt="thumbnail"  for="uploadThumbnail"  /></label>
+        <Image src={!data.blogImage ? assets.upload_area : URL.createObjectURL(data.blogImage)} alt="thumbnail"  htmlFor="uploadThumbnail"  width={100} height={64}/>
+        </label>
         <br />
         <input type="file" name="blogImage" id="uploadThumbnail" hidden onChange={handleInput} />
         <br />
@@ -44,9 +43,9 @@ export default function AddBlogs() {
         <br />
         <input type="text" name="blogTitle" id="blogTitle" className="border-2 pr-12 p-2 rounded" placeholder="Type here" autoComplete="off" onChange={handleInput} />
         <br />
-        <label htmlFor="blogTitle">Blog Description</label>
+        <label htmlFor="blogDescription">Blog Description</label>
         <br />
-        <input type="message" name="blogDescription" id="blogTitle" className="border-2 pb-[64px] px-2 pr-12 rounded" placeholder="write content here" autoComplete="off" onChange={handleInput}/>
+        <input type="message" name="blogDescription" id="blogDescription" className="border-2 pb-[64px] px-2 pr-12 rounded" placeholder="write content here" autoComplete="off" onChange={handleInput}/>
         <br />
         <label htmlFor="blogCategory">Blog Category</label>
         <br />
